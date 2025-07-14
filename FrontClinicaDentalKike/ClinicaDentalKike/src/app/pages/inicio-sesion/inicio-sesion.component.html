@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Clínica Dental</title>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Clínica Dental Kike</h2>
+    <br>
+    <form action="#">
+      <div class="input-group">
+        <input type="text" id="usuario" name="usuario" placeholder="Identificación de Usuario"
+         autofocus="" [(ngModel)]="Usuario" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="contrasena" name="contrasena" placeholder="Contraseña" 
+        [(ngModel)]="Contrasena" required>
+      </div>
+      <button type="submit" (click)="Autenticar()" >Iniciar Sesión</button>
+      <button type="submit" (click)="Desautenticar()" >Desautenticar</button>
+    </form>
+  </div>
+  
+</body>
+</html>

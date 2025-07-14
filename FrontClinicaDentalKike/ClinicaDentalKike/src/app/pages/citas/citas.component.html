@@ -1,0 +1,91 @@
+<h2>{{ Titulo }}</h2>
+
+<div class="formulario">
+  <ul>
+    <!-- BOTÓN PARA PDF -->
+  <div style="text-align: center; margin-top: 20px;">
+    <button class="btnGenerarPDF" (click)="crearPDF()">Generar PDF de Citas</button>
+  </div>
+    <!-- SECCIÓN DE AGREGAR CITA -->
+    <li class="agregar">
+      <h3>Agregar nueva cita</h3>
+      <form (ngSubmit)="agregarCita()" #nuevaCitaForm="ngForm">
+        <input 
+          type="text"
+          placeholder="Descripción de Cita" 
+          [(ngModel)]="nuevaCita.DescripcionDeCita" 
+          name="DescripcionDeCita" 
+          required 
+        />
+        <input 
+          type="datetime-local" 
+          [(ngModel)]="nuevaCita.FechaDeCita" 
+          name="FechaDeCita" 
+          required 
+        />
+        <select 
+          [(ngModel)]="nuevaCita.UsuarioId" 
+          name="UsuarioId" 
+          required 
+        >
+          <option value="" disabled selected>Seleccione un paciente</option>
+          <option *ngFor="let usuario of Usuarios()" [value]="usuario.UsuarioId">
+            {{ usuario.Nombre }} {{ usuario.PrimerApellido }}
+          </option>
+        </select>
+        <select 
+          [(ngModel)]="nuevaCita.TratamientoId" 
+          name="TratamientoId" 
+          required 
+        >
+          <option value="" disabled selected>Seleccione un tratamiento</option>
+          <option *ngFor="let tratamiento of Tratamientos()" [value]="tratamiento.TratamientoId">
+            {{ tratamiento.DescripcionDeTratamiento }}
+          </option>
+        </select>
+        <button id="btnAgregar" type="submit">Agregar Cita</button>
+      </form>
+    </li>
+
+    <!-- LISTA DE CITAS -->
+    @for (Cita of citasPaginadas(); track Cita.CitaId) {
+    <li>
+      <p>ID: {{ Cita.CitaId }}</p>
+      <form (ngSubmit)="modificarCita(Cita.CitaId, citaForm)" #citaForm="ngForm">
+        <input type="text" [(ngModel)]="Cita.DescripcionDeCita" name="DescripcionDeCita" required />
+        <!-- FECHA FORMATEADA -->
+        <input 
+          type="datetime-local" 
+          [ngModel]="Cita.FechaDeCita | date:'yyyy-MM-ddTHH:mm'" 
+          name="FechaDeCita" 
+          (ngModelChange)="Cita.FechaDeCita = $event" 
+          required
+        />
+        <select [(ngModel)]="Cita.UsuarioId" name="UsuarioId" required>
+          @for (Usuario of Usuarios(); track Usuario.UsuarioId) {
+            <option [value]="Usuario.UsuarioId">{{Usuario.Nombre}} {{Usuario.PrimerApellido}} {{Usuario.SegundoApellido}}</option>
+          }  
+        </select>
+
+        <select [(ngModel)]="Cita.TratamientoId" name="TratamientoId" required>
+          @for (Tratamiento of Tratamientos(); track Tratamiento.TratamientoId) {
+            <option [value]="Tratamiento.TratamientoId">{{Tratamiento.DescripcionDeTratamiento}}</option>
+          }  
+        </select>
+
+        <button id="btnModificar" type="submit">Modificar Cita</button>
+      </form>
+      <button id="btnBorrar" (click)="borrarCita(Cita.CitaId)">Borrar Cita</button>
+    </li>
+    } @empty {
+      <li>No hay citas registradas.</li>
+    }
+
+
+    <!-- PAGINACIÓN -->
+    <li class="paginacion">
+      <button (click)="cambiarPagina(paginaActual() - 1)" [disabled]="paginaActual() === 1">Anterior</button>
+      <span>Página {{ paginaActual() }} de {{ totalPaginas() }}</span>
+      <button (click)="cambiarPagina(paginaActual() + 1)" [disabled]="paginaActual() === totalPaginas()">Siguiente</button>
+    </li>
+  </ul>

@@ -1,0 +1,94 @@
+<h2>{{ Titulo }}</h2>
+
+<div class="formulario">
+  <ul>
+    <!-- SECCIÓN DE AGREGAR USUARIO -->
+    <li class="agregar">
+      <h3>Agregar nuevo usuario</h3>
+      <form (ngSubmit)="agregarUsuario()" #nuevoUsuarioForm="ngForm">
+        <input 
+          id="usuarioId" 
+          type="text"
+          maxlength="9"
+          placeholder="Identificación" 
+          [(ngModel)]="nuevoUsuario.UsuarioId" 
+          name="UsuarioId" 
+          required 
+        />
+        <input 
+          id="nombre" 
+          type="text"
+          placeholder="Nombre" 
+          [(ngModel)]="nuevoUsuario.Nombre" 
+          name="Nombre" 
+          required 
+        />
+        <input 
+          id="primerApellido"
+          type="text" 
+          placeholder="Primer Apellido" 
+          [(ngModel)]="nuevoUsuario.PrimerApellido" 
+          name="PrimerApellido" 
+          required 
+        />
+        <input 
+          id="segundoApellido" 
+          type="text"
+          placeholder="Segundo Apellido" 
+          [(ngModel)]="nuevoUsuario.SegundoApellido" 
+          name="SegundoApellido" 
+          required 
+        />
+        <input 
+          id="contrasena" 
+          type="password"
+          placeholder="Contraseña" 
+          [(ngModel)]="nuevoUsuario.Contrasena" 
+          name="Contrasena" 
+          required 
+        />
+        <select 
+          [(ngModel)]="nuevoUsuario.TipoDeUsuario" 
+          name="TipoDeUsuario" 
+          required 
+        >
+          <option value="" disabled selected>Seleccione Tipo de Usuario</option>
+          <option value="Doctor">Doctor</option>
+          <option value="Recepcionista">Recepcionista</option>
+          <option value="Paciente">Paciente</option>
+        </select>
+        <button id="btnAgregar" type="submit">Agregar Usuario</button>
+      </form>
+    </li>
+
+    <!-- LISTA DE USUARIOS -->
+    @for (Usuario of usuariosPaginados(); track Usuario.UsuarioId) {
+    <li>
+      <p>{{ Usuario.UsuarioId }}</p>
+      <form (ngSubmit)="modificarUsuario(Usuario.UsuarioId, usuarioForm)" #usuarioForm="ngForm">
+        <input type="text" [(ngModel)]="Usuario.Nombre" name="Nombre" required />
+        <input type="text" [(ngModel)]="Usuario.PrimerApellido" name="PrimerApellido" required />
+        <input type="text" [(ngModel)]="Usuario.SegundoApellido" name="SegundoApellido" required />
+        <select [(ngModel)]="Usuario.TipoDeUsuario" name="TipoDeUsuario" required id="cmbTipoUsuario">
+          <option value="Doctor">Doctor</option>
+          <option value="Recepcionista">Recepcionista</option>
+          <option value="Paciente">Paciente</option>
+        </select>     
+        <button id="btnModificar" type="submit">Modificar Usuario</button>  
+      </form>
+      <button id="btnBorrar" (click)="borrarUsuario(Usuario.UsuarioId)">
+        Borrar Usuario
+      </button>
+    </li>
+    } @empty {
+      <li>Nada que mostrar.</li>
+    }
+  </ul>
+    <li class="paginacion">
+      <button (click)="cambiarPagina(paginaActual() - 1)" [disabled]="paginaActual() === 1">Anterior</button>
+      
+      <span>Página {{ paginaActual() }} de {{ totalPaginas() }}</span>
+      
+      <button (click)="cambiarPagina(paginaActual() + 1)" [disabled]="paginaActual() === totalPaginas()">Siguiente</button>
+    </li>
+</div>

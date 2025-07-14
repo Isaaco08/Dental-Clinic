@@ -1,0 +1,31 @@
+{
+  "name": "clinicadentalkike",
+  "version": "1.0.0",
+  "description": "Sistema de la Clinica Dental Kike",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Isaac Alvarado Toruno",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.5",
+    "nodemon": "^3.1.2",
+    "prisma": "^5.12.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.12.1",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
+}

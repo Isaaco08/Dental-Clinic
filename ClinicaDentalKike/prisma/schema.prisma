@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  UsuarioId            String                 @id
+  TipoDeUsuario        TipoDeUsuario
+  Nombre               String
+  PrimerApellido       String
+  SegundoApellido      String
+  Cita                 Cita[]
+  ExpedienteDePaciente ExpedienteDePaciente[]
+  Auditoria            Auditoria[]
+  ActualizadoEn        DateTime               @default(now()) @updatedAt
+  Contrasena           String
+  Token                String? @db.VarChar(400)
+}
+
+enum TipoDeUsuario {
+  Doctor
+  Recepcionista
+  Paciente
+}
+
+model Cita {
+  CitaId            Int              @id @default(autoincrement())
+  FechaDeCita       DateTime?
+  Usuario           Usuario          @relation(fields: [UsuarioId], references: [UsuarioId])
+  UsuarioId         String
+  Tratamiento       Tratamiento      @relation(fields: [TratamientoId], references: [TratamientoId])
+  TratamientoId     Int
+  DescripcionDeCita String
+}
+
+model ExpedienteDePaciente {
+  ExpedienteDePacienteId  Int       @id @default(autoincrement())
+  FechaDeExpediente       DateTime  @default(now()) @updatedAt
+  Usuario                 Usuario   @relation(fields: [UsuarioId], references: [UsuarioId])
+  UsuarioId               String
+  DescripcionDeExpediente String
+}
+
+model Tratamiento {
+  TratamientoId            Int      @id @default(autoincrement())
+  Cita                     Cita[]
+  DescripcionDeTratamiento String
+}
+
+model Auditoria {
+  AuditoriaId          Int          @id @default(autoincrement())
+  Accion               Accion
+  Usuario              Usuario      @relation(fields: [UsuarioIdAuditoria], references: [UsuarioId])
+  UsuarioIdAuditoria   String
+  DescripcionAuditoria String
+}
+
+enum Accion {
+  Crear
+  Eliminar
+  Actualizar
+}

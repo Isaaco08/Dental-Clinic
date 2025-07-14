@@ -1,0 +1,197 @@
+---------------------------------------- USUARIOS ----------------------------------------
+
+###
+
+POST http://localhost/usuario/autenticar HTTP/1.1
+Content-Type: application/json
+
+{
+  "UsuarioId": "901180450",
+  "Contrasena": "1234"
+}
+
+###
+
+POST http://localhost/usuario/listar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc3VhcmlvSWQiOiI5MDExODA0NTAiLCJUaXBvRGVVc3VhcmlvIjoiRG9jdG9yIiwiaWF0IjoxNzIzNjg0ODU2LCJleHAiOjE3MjM2ODUxNTZ9.y28Cnd3dJ2Y4oPEx5DF1SRihz9kxkTxh1O5sQLCZYtQ
+
+###
+
+GET http://localhost/usuario/111111111 HTTP/1.1
+Authorization: Bearer 
+
+###
+
+POST http://localhost/usuario HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc3VhcmlvSWQiOiI5MDExODA0NTAiLCJUaXBvRGVVc3VhcmlvIjoiRG9jdG9yIiwiaWF0IjoxNzIzNjg0ODAyLCJleHAiOjE3MjM2ODUxMDJ9.u_Zd0sxkZMK9ipRVSxVpzBxHKYH8EAV3sVUxyMPUAjA
+Content-Type: application/json
+
+{
+  "UsuarioId": "111111111",
+  "Nombre": "Mario",
+  "PrimerApellido": "Hernandez",
+  "SegundoApellido": "Solorzano",
+  "TipoDeUsuario": "Paciente",
+  "Contrasena": "1234",
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+DELETE http://localhost/usuario/111111111 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc3VhcmlvSWQiOiI5MDExODA0NTAiLCJUaXBvRGVVc3VhcmlvIjoiRG9jdG9yIiwiaWF0IjoxNzIzNjg0ODU2LCJleHAiOjE3MjM2ODUxNTZ9.y28Cnd3dJ2Y4oPEx5DF1SRihz9kxkTxh1O5sQLCZYtQ
+Content-Type: application/json
+
+{
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+PUT http://localhost/usuario/111111111 HTTP/1.1
+Authorization: Bearer 
+Content-Type: application/json
+
+{
+  "Nombre": "Mario 2",
+  "PrimerApellido": "Hernandez 2",
+  "SegundoApellido": "Solorzano 2",
+  "TipoDeUsuario": "Doctor",
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+---------------------------------------- TRATAMIENTOS ----------------------------------------
+
+###
+
+POST http://localhost/tratamiento/listar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc3VhcmlvSWQiOiI5MDExODA0NTAiLCJUaXBvRGVVc3VhcmlvIjoiRG9jdG9yIiwiaWF0IjoxNzIzODI5MzExLCJleHAiOjE3MjM4Mjk2MTF9.7dbdyYsjyjWFmISzIXn3OO8gYeCpiow0YQQ8O4GrV2c
+
+###
+
+GET http://localhost/tratamiento/11 HTTP/1.1
+
+###
+
+POST http://localhost/tratamiento HTTP/1.1
+Content-Type: application/json
+
+{
+  "DescripcionDeTratamiento": "Prueba Tratamiento",
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+DELETE http://localhost/tratamiento/12 HTTP/1.1
+Content-Type: application/json
+
+{
+  "UsuarioIdAuditoria": "901180450"
+} 
+
+###
+
+PUT http://localhost/tratamiento/12 HTTP/1.1
+Content-Type: application/json
+
+{                                          
+  "DescripcionDeTratamiento": "????????????????",
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+---------------------------------------- CITAS ----------------------------------------
+
+###
+
+GET http://localhost/cita/ HTTP/1.1
+
+###
+
+GET http://localhost/cita/31 HTTP/1.1
+
+###
+
+POST http://localhost/cita HTTP/1.1
+Content-Type: application/json
+
+{
+  "CitaId": 31,
+  "UsuarioId": "111111111",
+  "TratamientoId": 10,
+  "DescripcionDeCita": "Cita de prueba",
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+DELETE http://localhost/cita/31 HTTP/1.1
+Content-Type: application/json
+
+{
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+PUT http://localhost/cita/31 HTTP/1.1
+Content-Type: application/json
+
+{
+  "DescripcionDeCita": "Cita de prueba actualizada",
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+---------------------------------------- EXPEDIENTES DE PACIENTES ----------------------------------------
+
+###
+
+GET http://localhost/expedienteDePaciente/ HTTP/1.1
+
+###
+
+GET http://localhost/expedienteDePaciente/11 HTTP/1.1
+
+###
+
+POST http://localhost/expedienteDePaciente HTTP/1.1
+Content-Type: application/json
+
+{
+  "ExpedienteDePacienteId": 11,
+  "UsuarioId": "111111111",
+  "DescripcionDeExpediente": "Prueba 11 expediente",
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+DELETE http://localhost/expedienteDePaciente/11 HTTP/1.1
+Content-Type: application/json
+
+{
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+PUT http://localhost/expedienteDePaciente/11 HTTP/1.1
+Content-Type: application/json
+
+{
+  "DescripcionDeExpediente": "Prueba actualizada 11 expediente",
+  "UsuarioId": "901180450",
+  "UsuarioIdAuditoria": "901180450"
+}
+
+###
+
+GET http://localhost/paciente/ HTTP/1.1
+
+###

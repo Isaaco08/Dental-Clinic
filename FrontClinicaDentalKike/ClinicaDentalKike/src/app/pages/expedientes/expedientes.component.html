@@ -1,0 +1,60 @@
+<h2>{{ Titulo }}</h2>
+
+<div class="formulario">
+  <ul>
+    <!-- SECCIÓN DE AGREGAR EXPEDIENTE -->
+    <li class="agregar">
+      <h3>Agregar nuevo expediente</h3>
+      <form (ngSubmit)="agregarExpediente()" #nuevoExpedienteForm="ngForm">
+        <input 
+          id="descripcionDeExpediente" 
+          type="text"
+          placeholder="Descripción del expediente" 
+          [(ngModel)]="nuevoExpediente.DescripcionDeExpediente" 
+          name="DescripcionDeExpediente" 
+          required 
+        />
+        <select 
+          [(ngModel)]="nuevoExpediente.UsuarioId" 
+          name="UsuarioId" 
+          required 
+        >
+          <option value="" disabled selected>Seleccione paciente</option>
+          <option *ngFor="let usuario of Usuarios()" [value]="usuario.UsuarioId">
+            {{ usuario.Nombre }} {{ usuario.PrimerApellido }} {{ usuario.SegundoApellido }}
+          </option>
+        </select>
+        <button id="btnAgregarExpediente" type="submit">Agregar Expediente</button>
+      </form>
+    </li>
+
+    <!-- LISTA DE EXPEDIENTES -->
+    @for (Expediente of expedientesPaginados(); track Expediente.ExpedienteDePacienteId) {
+    <li>
+      <p>ID: {{ Expediente.ExpedienteDePacienteId }}</p> <br>
+      <p>Fecha: {{ ExpedienteFecha.FechaDeExpediente | date: formatoFecha }}</p>
+      <form (ngSubmit)="modificarExpediente(Expediente.ExpedienteDePacienteId, expedienteForm)" #expedienteForm="ngForm">
+        <input type="text" [(ngModel)]="Expediente.DescripcionDeExpediente" name="DescripcionDeExpediente" required />
+        <select [(ngModel)]="Expediente.UsuarioId" name="UsuarioId" required>
+          @for (Usuario of Usuarios(); track Usuario.UsuarioId) {
+            <option [value]="Usuario.UsuarioId">
+              {{Usuario.Nombre}} {{Usuario.PrimerApellido}} {{Usuario.SegundoApellido}}
+            </option>
+          }  
+        </select>
+        <button id="btnModificar" type="submit">Modificar Expediente</button>
+      </form>
+      <button id="btnBorrar" (click)="borrarExpediente(Expediente.ExpedienteDePacienteId)">Borrar Expediente</button>
+    </li>
+    } @empty {
+      <li>No hay expedientes registrados.</li>
+    }
+
+    <!-- PAGINACIÓN -->
+    <li class="paginacion">
+      <button (click)="cambiarPagina(paginaActual() - 1)" [disabled]="paginaActual() === 1">Anterior</button>
+      <span>Página {{ paginaActual() }} de {{ totalPaginas() }}</span>
+      <button (click)="cambiarPagina(paginaActual() + 1)" [disabled]="paginaActual() === totalPaginas()">Siguiente</button>
+    </li>
+  </ul>
+</div>

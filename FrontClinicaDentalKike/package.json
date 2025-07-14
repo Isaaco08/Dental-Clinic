@@ -1,0 +1,14 @@
+{
+  "name": "frontclinicadentalkike",
+  "version": "1.0.0",
+  "description": "FrontEnd para la Clinica Dental Kike",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Isaac Alvarado Toruño",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/cli": "^18.0.3"
+  }
+}

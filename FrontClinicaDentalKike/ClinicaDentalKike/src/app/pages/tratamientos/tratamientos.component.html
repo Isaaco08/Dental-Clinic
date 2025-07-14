@@ -1,0 +1,44 @@
+<h2>{{ Titulo }}</h2>
+
+<div class="formulario">
+  <ul>
+    <!-- SECCIÓN DE AGREGAR TRATAMIENTO -->
+    <li class="agregar">
+      <h3>Agregar nuevo tratamiento</h3>
+      <form (ngSubmit)="agregarTratamiento()" #nuevoTratamientoForm="ngForm">
+        <input 
+          type="text" 
+          placeholder="Descripción de tratamiento" 
+          [(ngModel)]="descripcionTratamiento" 
+          name="DescripcionDeTratamiento" 
+          required
+        />
+        <button id="btnAgregar" type="submit">Agregar Tratamiento</button>
+      </form>
+    </li>
+
+    <!-- LISTADO DE TRATAMIENTOS -->
+    @for (Tratamiento of tratamientosPaginados(); track Tratamiento.TratamientoId) {
+      <li>
+        <p>{{ Tratamiento.TratamientoId }}</p>
+        <input
+          type="text"
+          (keydown.enter)="modificarTratamiento(Tratamiento.TratamientoId, $event)"
+          [value]="Tratamiento.DescripcionDeTratamiento"
+        />
+        <button id="btnBorrar" (click)="borrarTratamiento(Tratamiento.TratamientoId)">
+          Borrar Tratamiento
+        </button>
+      </li>
+    } @empty {
+      <li>Nada que mostrar.</li>
+    }
+
+    <!-- PAGINACIÓN -->
+    <li class="paginacion">
+      <button (click)="cambiarPagina(paginaActual() - 1)" [disabled]="paginaActual() === 1">Anterior</button>
+      <span>Página {{ paginaActual() }} de {{ totalPaginas() }}</span>
+      <button (click)="cambiarPagina(paginaActual() + 1)" [disabled]="paginaActual() === totalPaginas()">Siguiente</button>
+    </li>
+  </ul>
+</div>
